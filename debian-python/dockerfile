@@ -1,0 +1,18 @@
+# Utiliza la imagen base Debian 11.9
+FROM debian:11.9
+
+# Actualiza el índice de paquetes y actualiza los paquetes existentes
+RUN apt-get update && apt-get upgrade -y
+
+# Instala Python y pip
+RUN apt-get install -y python3 python3-pip
+
+# Limpia la caché de paquetes descargados
+RUN apt-get clean
+
+# Define la etiqueta de la versión
+LABEL version="11.9"
+
+# Define el autor
+LABEL maintainer="Javier Moreno Sánchez"
+
