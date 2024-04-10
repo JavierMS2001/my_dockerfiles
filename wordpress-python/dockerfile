@@ -1,0 +1,30 @@
+# Use Debian 11.9 image
+FROM wordpress:latest
+
+# Update and upgrade packages and repos
+RUN apt-get update && apt-get upgrade -y
+
+# Install sudo
+RUN apt-get install -y sudo wget
+
+# Install Python and pip
+RUN apt-get install -y python3 python3-pip
+
+# Clean cache
+RUN apt-get clean
+
+# Install Wordpress
+RUN rm -r /var/www/html/*
+
+RUN wget -c https://wordpress.org/latest.tar.gz -O - | sudo tar -xz
+
+RUN sudo cp -r wordpress/* /var/www/html/
+
+RUN sudo chown www-data:www-data /var/www/html/* | sudo chmod 0755 /var/www/html/*
+
+# Define version tag
+LABEL version="v2"
+
+# Define author
+LABEL maintainer="Javier Moreno Sánchez"
+
