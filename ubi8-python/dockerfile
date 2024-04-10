@@ -4,6 +4,9 @@ FROM redhat/ubi8
 # Update and upgrade packages
 RUN yum update -y && yum upgrade -y
 
+# Install sudo
+RUN yum install -y sudo
+
 # Install python and pip
 RUN yum install -y python3 python3-pip
 

@@ -1,17 +1,20 @@
 # Use Debian 11.9 image
-FROM debian:11.9
+FROM debian-python:11.9
 
 # Update and upgrade packages and repos
 RUN apt-get update && apt-get upgrade -y
 
-# Install sudo
-RUN apt-get install -y sudo
-
-# Install Python and pip
-RUN apt-get install -y python3 python3-pip
+# Install apache2
+RUN apt-get install apache2 -y
 
 # Clean cache
 RUN apt-get clean
+
+# Start apache service
+RUN service apache2 start
+
+# Open port 80
+EXPOSE 80
 
 # Define version tag
 LABEL version="11.9"
