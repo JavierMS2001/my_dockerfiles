@@ -1,0 +1,15 @@
+FROM ubi8-pre_mariadb
+
+RUN yum update -y && yum upgrade -y
+
+COPY MariaDB.repo /etc/yum.repos.d/MariaDB.repo
+
+RUN yum install -y mariadb-server python3-PyMySQL
+
+RUN yum clean all
+
+ENV MARIADB_ROOT_PASSWORD=vagrant
+
+EXPOSE 3306
+
+LABEL version="1.0"

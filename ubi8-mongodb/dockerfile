@@ -1,0 +1,15 @@
+FROM ubi8-python:v1
+
+COPY MongoDB.repo /etc/yum.repos.d/MongoDB.repo
+
+RUN yum update -y && yum upgrade -y
+
+RUN yum install -y mongodb-org mongosh
+
+RUN pip3 install pymongo
+
+RUN yum clean all
+
+EXPOSE 27017
+
+LABEL version="1.0"

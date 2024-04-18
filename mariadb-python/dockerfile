@@ -1,0 +1,31 @@
+# Use Debian 11.9 image
+FROM mariadb:latest
+
+# Update and upgrade packages and repos
+RUN apt-get update && apt-get upgrade -y
+
+# Install sudo
+RUN apt-get install -y sudo
+
+# Install Python and pip
+RUN apt-get install -y python3 python3-pip python3-mysqldb
+
+# Clean cache
+RUN apt-get clean
+
+ENV MARIADB_ROOT_PASSWORD=vagrant
+
+# Copy config file
+COPY 50-server.cnf /etc/mysql/mariadb.cnf
+
+# Open port 3306
+EXPOSE 3306
+
+CMD ["/etc/init.d/mariadb", "/run/mariadb/mariadb.pid"]
+
+# Define version tag
+LABEL version="1.1"
+
+# Define author
+LABEL maintainer="Javier Moreno Sánchez"
+
