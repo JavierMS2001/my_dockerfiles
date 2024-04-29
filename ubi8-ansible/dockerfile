@@ -1,0 +1,21 @@
+# Use Ubi8-python image
+FROM ubi8-python:v1
+
+# Update and upgrade packages and repos
+RUN yum update && yum upgrade -y
+
+# Update pip
+RUN python3 -m pip install --upgrade pip
+
+# Install ansible
+RUN pip3 install ansible
+
+# Clean cache
+RUN yum clean all
+
+# Define version tag
+LABEL version="v1"
+
+# Define author
+LABEL maintainer="Javier Moreno Sánchez"
+

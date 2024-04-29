@@ -1,0 +1,25 @@
+# Use Debian 11.9 image
+FROM debian-python:11.9
+
+# Instalar systemd y habilitar el servicio
+RUN apt-get update && \
+    apt-get install -y systemd && \
+    systemctl mask \
+        tmp.mount \
+        etc-hostname.mount \
+        etc-hosts.mount \
+        etc-resolv.conf.mount \
+        etc-fstab.mount \
+        dev-mqueue.mount \
+        sys-kernel-config.mount \
+        sys-kernel-debug.mount \
+        cgroup.mount \
+        sys-kernel-security.mount \
+        sys-kernel-debug.mount && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    systemctl set-default multi-user.target
+
+# Indicar que Docker debe correr en modo systemd
+#CMD ["/lib/systemd/systemd"]
+CMD ["/sbin/init"]

@@ -1,0 +1,18 @@
+ARG BASEOS_DIGEST
+FROM docker.io/library/debian:11
+
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends iproute2 procps systemd systemd-sysv 
+RUN apt-get install -y --no-install-recommends sudo libffi-dev libssl-dev python3
+
+RUN rm -Rf /var/lib/apt/lists/*
+RUN rm -Rf /usr/share/doc && rm -Rf /usr/share/man
+
+RUN apt-get clean
+
+RUN rm -f /lib/systemd/system/multi-user.target.wants/getty.target
+
+STOPSIGNAL SIGRTMIN+3
+
+VOLUME ["/sys/fs/cgroup"]
+CMD ["/sbin/init"]
